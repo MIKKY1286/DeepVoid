@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepVoid - Send Message</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(5px);
+        }
+
+        nav a {
+            color: #ddd;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            padding: 8px 12px;
+            transition: 0.3s;
+        }
+
+        nav a:hover, nav .active {
+            color: #00ffcc;
+            text-shadow: 0px 0px 8px #00ffcc;
+        }
+
+        /* Main Container */
+        .container {
+            margin-top: 80px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        /* Title */
+        .title {
+            font-size: 32px;
+            color: #00ffcc;
+            text-shadow: 0px 0px 10px #00ffcc;
+        }
+
+        /* Message Input */
+        .message-box {
+            width: 100%;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 16px;
+            color: #fff;
+            outline: none;
+            margin-top: 20px;
+            resize: none;
+        }
+
+        /* Send Button */
+        .send-btn {
+            margin-top: 15px;
+            background: #00ffcc;
+            border: none;
+            color: #000;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .send-btn:hover {
+            background: #008866;
+        }
+
+        /* Success Message */
+        .success {
+            color: #00ffcc;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="../index/index.html">Home</a>
+        <a href="../recive page/recieve.html">Receive</a>
+        <a href="../send mesage page/send.html" class="active">Send</a>
+        <a href="../void page/void.html">Void</a>
+    </nav>
+
+    <div class="container">
+        <h1 class="title">Send an Anonymous Message</h1>
+        <textarea id="messageInput" class="message-box" placeholder="Type your message..."></textarea>
+        <button class="send-btn" id="sendMessage">Send</button>
+        <p class="success" id="successMessage">Message Sent Successfully! 🎉</p>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+    apiKey: "AIzaSyCsa2c82g1OHNU2HcxCyQLr5RSM7DEDQXM",
+    authDomain: "deepvoid-6baf3.firebaseapp.com",
+    projectId: "deepvoid-6baf3",
+    storageBucket: "deepvoid-6baf3.firebasestorage.app",
+    messagingSenderId: "648550508783",
+    appId: "1:648550508783:web:6859320a313dc7214b531a"
+  };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.getElementById("sendMessage").addEventListener("click", async () => {
+            const messageInput = document.getElementById("messageInput");
+            const successMessage = document.getElementById("successMessage");
+
+            if (messageInput.value.trim() === "") {
+                alert("Message cannot be empty!");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "messages"), {
+                    text: messageInput.value,
+                    timestamp: new Date()
+                });
+
+                messageInput.value = ""; // Clear the input
+                successMessage.style.display = "block";
+
+                setTimeout(() => {
+                    successMessage.style.display = "none";
+                }, 2000);
+            } catch (error) {
+                console.error("Error sending message:", error);
+                alert("Failed to send message.");
+            }
+        });
+    </script>
+
+</body>
+</html>

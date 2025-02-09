@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepVoid - Speak Freely</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(5px);
+        }
+
+        nav a {
+            color: #ddd;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            padding: 8px 12px;
+            transition: 0.3s;
+        }
+
+        nav a:hover, nav .active {
+            color: #00ffcc;
+            text-shadow: 0px 0px 8px #00ffcc;
+        }
+
+        /* Main Container */
+        .container {
+            margin-top: 80px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Title & Tagline */
+        .title {
+            font-size: 32px;
+            color: #00ffcc;
+            text-shadow: 0px 0px 10px #00ffcc;
+        }
+
+        .tagline {
+            font-size: 18px;
+            margin-top: 5px;
+            color: #bbb;
+        }
+
+        /* Message Box */
+        .message-box {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            background: #222;
+            color: #fff;
+            border: 1px solid #00ffcc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 10px;
+            width: 100%;
+            padding: 12px;
+            background: #00ffcc;
+            color: #0d0d0d;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #009977;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="./index.html" class="active">Home</a>
+        <a href="../recive page/recieve.html">Receive</a>
+        <a href="../send mesage page/send.html">Send</a>
+        <a href="../void page/void.html">Void</a>
+    </nav>
+
+    <div class="container">
+        <h1 class="title">DeepVoid</h1>
+        <p class="tagline">share your thoughts and recieve others ideas</p>
+
+        <div class="message-box">
+            <textarea id="messageInput" placeholder="Write your thoughts..."></textarea>
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+    apiKey: "AIzaSyCsa2c82g1OHNU2HcxCyQLr5RSM7DEDQXM",
+    authDomain: "deepvoid-6baf3.firebaseapp.com",
+    projectId: "deepvoid-6baf3",
+    storageBucket: "deepvoid-6baf3.firebasestorage.app",
+    messagingSenderId: "648550508783",
+    appId: "1:648550508783:web:6859320a313dc7214b531a"
+  };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const sendBtn = document.getElementById("sendBtn");
+        const messageInput = document.getElementById("messageInput");
+
+        sendBtn.addEventListener("click", async () => {
+            const messageText = messageInput.value.trim();
+            if (messageText === "") return;
+
+            try {
+                await addDoc(collection(db, "messages"), { text: messageText, timestamp: new Date() });
+                messageInput.value = "";
+                alert("Message sent anonymously!");
+            } catch (error) {
+                console.error("Error adding message:", error);
+            }
+        });
+    </script>
+
+</body>
+</html>

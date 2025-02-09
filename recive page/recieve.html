@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepVoid - Receive Messages</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(5px);
+        }
+
+        nav a {
+            color: #ddd;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            padding: 8px 12px;
+            transition: 0.3s;
+        }
+
+        nav a:hover, nav .active {
+            color: #00ffcc;
+            text-shadow: 0px 0px 8px #00ffcc;
+        }
+
+        /* Main Container */
+        .container {
+            margin-top: 80px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Title */
+        .title {
+            font-size: 32px;
+            color: #00ffcc;
+            text-shadow: 0px 0px 10px #00ffcc;
+        }
+
+        /* Messages List */
+        .messages {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="../index/index.html">Home</a>
+        <a href="./recieve.html" class="active">Receive</a>
+        <a href="../send mesage page/send.html">Send</a>
+        <a href="../void page/void.html">Void</a>
+    </nav>
+
+    <div class="container">
+        <h1 class="title">Anonymous Messages</h1>
+        <div id="messagesContainer" class="messages"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+    apiKey: "AIzaSyCsa2c82g1OHNU2HcxCyQLr5RSM7DEDQXM",
+    authDomain: "deepvoid-6baf3.firebaseapp.com",
+    projectId: "deepvoid-6baf3",
+    storageBucket: "deepvoid-6baf3.firebasestorage.app",
+    messagingSenderId: "648550508783",
+    appId: "1:648550508783:web:6859320a313dc7214b531a"
+  };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadMessages() {
+            const messagesContainer = document.getElementById("messagesContainer");
+            messagesContainer.innerHTML = "Loading messages...";
+
+            try {
+                const querySnapshot = await getDocs(collection(db, "messages"));
+                messagesContainer.innerHTML = "";
+
+                querySnapshot.forEach(doc => {
+                    const messageData = doc.data();
+                    const messageDiv = document.createElement("div");
+                    messageDiv.classList.add("message");
+                    messageDiv.textContent = messageData.text;
+                    messagesContainer.appendChild(messageDiv);
+                });
+            } catch (error) {
+                console.error("Error fetching messages:", error);
+                messagesContainer.innerHTML = "Failed to load messages.";
+            }
+        }
+
+        loadMessages();
+    </script>
+
+</body>
+</html>

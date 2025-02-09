@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepVoid - Home</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(5px);
+        }
+
+        nav a {
+            color: #ddd;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            padding: 8px 12px;
+            transition: 0.3s;
+        }
+
+        nav a:hover, nav .active {
+            color: #00ffcc;
+            text-shadow: 0px 0px 8px #08d8ae;
+        }
+
+        /* Main Section */
+        .container {
+            margin-top: 80px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 36px;
+            color: #00ffcc;
+            text-shadow: 0px 0px 10px #00ffcc;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 18px;
+            color: #bbb;
+            margin-bottom: 30px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: #08d8ae;
+            padding: 12px 20px;
+            font-size: 20px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: #09c7a1;
+            box-shadow: 0px 0px 10px #0fecc0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="./index/index.html" class="active">Home</a>
+        <a href="./recive page/recieve.html">Receive</a>
+        <a href="./send mesage page/send.html">Send</a>
+        <a href="./void page/void.html">Void</a>
+    </nav>
+
+    <div class="container">
+        <h1 class="title">DeepVoid</h1>
+        <p class="tagline">A place where voices disappear, yet remain forever.</p>
+        <a href="./send mesage page/send.html" class="cta-btn">Send a Message</a>
+    </div>
+
+</body>
+</html>
